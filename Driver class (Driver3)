@@ -1,0 +1,287 @@
+import java.io.*;
+import java.util.*;
+
+public class Driver3 {
+	
+	static void getFiles(String filename,DoublyLinkedList<Vocab> store) {
+		try {	BufferedReader reader = new BufferedReader(new FileReader(filename));
+			String line;
+			Vocab currentVocab = null;
+				for(int i=0; (line=reader.readLine())!=null; i++){
+					if(line.equals("")) {}else {
+					if(line.charAt(0)=='#') {
+						  String topic = line.substring(1).trim(); 
+		                    currentVocab = new Vocab(topic); 
+		                    store.AddAtHead(currentVocab); 
+					}else {
+		                currentVocab.words.addAtEnd(line.trim());
+		            }
+				}
+			}
+			reader.close();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+	 static void WriteFiles(String Directory,DoublyLinkedList<Vocab> WriteFrom) {
+			try {BufferedWriter writer = new BufferedWriter(new FileWriter(Directory));
+			String line;
+			Vocab currentVocab=null;
+			for(int i=0;i<WriteFrom.getSize();i++) {
+				currentVocab=WriteFrom.datafinder(i);
+				writer.write("#"+currentVocab.topic+"\n");
+				for(int j=0;j<currentVocab.words.getSize();j++) {
+				writer.write(currentVocab.words.get(j)+"\n");
+			}
+				writer.write("\n");
+		}writer.close(); 
+	}
+			catch(IOException e) {
+				e.printStackTrace();
+			}
+	 }
+
+	public static void main(String[] args) {
+		DoublyLinkedList<Vocab> vocab_list =null;
+		 Scanner KB = new Scanner(System.in);
+	        int choice;
+	        do {
+	            System.out.println("-----------------------------\nVocabulary Control Center\n-----------------------------");
+	            System.out.println("1. browse a topic");
+	            System.out.println("2. insert a new topic before another one");
+	            System.out.println("3. insert a new topic after another one");
+	            System.out.println("4. remove a topic");
+	            System.out.println("5. modify a topic");
+	            System.out.println("6. search topics for a word");
+	            System.out.println("7. load from a file");
+	            System.out.println("8. show all words starting with a given letter");
+	            System.out.println("9. save to file");
+	            System.out.println("0. exit");
+	            System.out.println("-----------------------------");
+	            System.out.print("Enter Your Choice: ");
+	            choice = KB.nextInt();
+	            KB.nextLine(); //consume new line
+
+	            switch (choice) {
+	                case 1:while(true) {
+	            System.out.println("\n-----------------------------\nPick a Topic\n-----------------------------");
+	            ArrayList<Vocab>choices = vocab_list.datagather();
+	            for(int i=0;i<choices.size();i++) {
+	            	Vocab vocab=choices.get(i);
+	            	System.out.println((i+1)+". "+vocab.getTopic());
+	            }
+	            System.out.println("0. exit");
+	            int choice1=KB.nextInt();
+	            if(choice1==0) {System.out.println("exiting...");break;}
+	          Vocab  VocabChoice=vocab_list.datafinder(choice1);
+	          SinglyLinkedList<String> words=  VocabChoice.getWords();
+	          System.out.println("Topic: "+VocabChoice.getTopic());
+	          words.display();
+	          
+	                }
+	                    break;
+	                case 2:
+	                	  System.out.println("-----------------------------\nPick a Topic\n-----------------------------");
+	      	            ArrayList<Vocab>choices = vocab_list.datagather();
+	      	            for(int i=0;i<choices.size();i++) {
+	      	            	Vocab vocab=choices.get(i);
+	      	            	System.out.println((i+1)+". "+vocab.getTopic());
+	      	            }
+	      	            System.out.println("0. exit");
+	      	          int choice2=KB.nextInt();
+	      	        if(choice2==0) {System.out.println("exiting...");break;}
+	      	        Vocab  VocabChoice=vocab_list.datafinder(choice2);      
+	  	            System.out.println("Enter a Topic Name:");
+	  	            String newTopic=KB.next();
+	  	            Vocab newVocab=new Vocab(newTopic);
+	  	            System.out.println("Enter your words-to quit and Add new Topic press 0");
+	  	            while(true) {
+	  	            String newWord=KB.next();
+	  	          if(newWord.equals("0")) {break;}
+	  	            newVocab.words.addAtHead(newWord);
+	  	            }
+	  	            vocab_list.AddBeforeData(VocabChoice, newVocab);
+	  	            System.out.println("Topic successfully added");
+	                    break;
+	                case 3:
+	                	  System.out.println("-----------------------------\nPick a Topic\n-----------------------------");
+		      	            ArrayList<Vocab>choices3 = vocab_list.datagather();
+		      	            for(int i=0;i<choices3.size();i++) {
+		      	            	Vocab vocab=choices3.get(i);
+		      	            	System.out.println((i+1)+". "+vocab.getTopic());
+		      	            }
+		      	            System.out.println("0. exit");
+		      	          int choice3=KB.nextInt();
+		      	        if(choice3==0) {System.out.println("exiting...");break;}
+		      	        Vocab  VocabChoice3=vocab_list.datafinder(choice3);
+		  	            System.out.println("Enter a Topic Name:");
+		  	            String newTopic3=KB.next();
+		  	            Vocab newVocab3=new Vocab(newTopic3);
+		  	            System.out.println("Enter your words-to quit and Add new Topic press 0");
+		  	            while(true) {
+		  	            String newWord=KB.next();
+		  	          if(newWord.equals("0")) {break;}
+		  	            newVocab3.words.addAtHead(newWord);
+		  	            }
+		  	            vocab_list.AddAfterData(VocabChoice3, newVocab3);
+		  	            System.out.println("Topic successfully added");
+		                    break;
+	                case 4:
+	                	  System.out.println("-----------------------------\nPick a Topic\n-----------------------------");
+		      	            ArrayList<Vocab>choices4 = vocab_list.datagather();
+		      	            for(int i=0;i<choices4.size();i++) {
+		      	            	Vocab vocab=choices4.get(i);
+		      	            	System.out.println((i+1)+". "+vocab.getTopic());
+		      	            }
+		      	            System.out.println("0. exit");
+		      	          int choice4=KB.nextInt();
+		      	        if(choice4==0) {System.out.println("exiting...");break;}else if(choice4==1) {vocab_list.RemoveHead();}else if(choice4==choices4.size()) {vocab_list.RemoveTail();}
+		      	        Vocab  VocabChoice4=vocab_list.datafinder(choice4);
+		  	            vocab_list.removedata(VocabChoice4);
+		  	          System.out.println("Topic successfully removed");
+	                    break;
+	                case 5:
+	                	  System.out.println("-----------------------------\nPick a Topic\n-----------------------------");
+		      	            ArrayList<Vocab>choices5 = vocab_list.datagather();
+		      	            for(int i=0;i<choices5.size();i++) {
+		      	            	Vocab vocab=choices5.get(i);
+		      	            	System.out.println((i+1)+". "+vocab.getTopic());
+		      	            }
+		      	            System.out.println("0. exit");
+		      	          int choice5=KB.nextInt();
+		      	        if(choice5==0) {System.out.println("exiting...");break;}
+		      	        Vocab  VocabChoice5=vocab_list.datafinder(choice5);
+		      	      System.out.println("-----------------------------\nModify Topics Menu\n-----------------------------");
+		      	      System.out.println("a add a word\nr remove a word\nc change a word\n0 to exit");
+		      	      String wordChoice=KB.next();
+		      	      if(wordChoice.equals("a")) {
+		      	    	  System.out.println("Type a word and press Enter, or press 0 to exit");
+		      	    	  String newWord=KB.next();
+		      	    	  if(newWord.equals("0")) {System.out.println("exiting...");break;}
+		      	    	  SinglyLinkedList<String> words = VocabChoice5.getWords();
+		      	    	  boolean exists=false;
+		      	    	 for (int i=0;i<words.getSize();i++) {
+		      	            if (newWord.equals(words.get(i))) {
+		      	               System.out.println("Sorry "+newWord+ " is already in the list");
+		      	               exists=true;
+		      	                break; 
+		      	            }
+		      	    	 }
+		      	    	 if(exists==false) {
+		      	    	  VocabChoice5.getWords().addAtHead(newWord);
+		      	    	  System.out.println("Successfully added word");
+		      	    	 }
+		      	      }else if(wordChoice.equals("r")) {
+		      	    	  System.out.println("Type a word to remove, or press 0 to exit");
+		      	    	  String newWord=KB.next();
+		      	    	  if(newWord.equals("0")) {System.out.println("exiting...");break;}
+		      	    	  SinglyLinkedList<String> words = VocabChoice5.getWords();
+		      	    	  boolean exists=false;
+		      	    	 for (int i=0;i<words.getSize();i++) {
+		      	            if (newWord.equals(words.get(i))) {
+		      	              words.removedata(newWord);
+		      	              exists=true;
+		      	                break; 
+		      	            }
+		      	    }
+		      	  	 if(exists==false) 
+		      	    	  System.out.println("Word Not Found");
+		      	    	 else
+		      	    	 System.out.println("Word Successfully removed");
+		      	      }else if(wordChoice.equals("c")) {
+		      	    	  System.out.println("Enter a Word to Change:");
+		      	    	  String word=KB.next();
+		      	    	  SinglyLinkedList<String> words = VocabChoice5.getWords();
+		      	    	 boolean exists=false;
+		      	    	 for (int i=0;i<words.getSize();i++) {
+		      	            if (word.equals(words.get(i))) {
+		      	              System.out.println("Enter new Word:");
+		      	              String newWord=KB.next();
+		      	              words.addAtHead(newWord);
+		      	              exists=true;
+		      	                break; 
+		      	            }
+		      	    }
+		      	  	 if(exists==false) 
+		      	    	  System.out.println("Word Not Found");
+		      	    	 else
+		      	    	 System.out.println("Word Successfully changed");
+		      	      }else if(wordChoice.equals("0")){
+		      	      System.out.println("Exiting...");
+		      	      break;
+		      	      }else {System.out.println("Incorrect input");}
+		      	        
+	                    break;
+	                case 6:
+	         System.out.println("Enter the Word you wish to search for");
+	         String Word=KB.next();
+	         boolean found=false;
+	         for(int i=0;i<vocab_list.getSize();i++) {
+	        	 Vocab vocab=vocab_list.datafinder(i);
+	        	 SinglyLinkedList<String> words = vocab.getWords();
+	        	 for(int j=0;j<words.getSize();j++) {
+	        		  if (Word.equals(words.get(j))) {
+	        			  System.out.println(Word+" found in "+vocab.getTopic());
+	        			  found=true;
+	        			  break;
+	      	            }
+	        		  if(found==true)break;
+	        	 }	 
+	         }
+	         if(found==false) System.out.println("Word not found in any topics");
+	                    break;
+	                case 7:
+	                    // Load from a file
+	                	System.out.println("Enter the name of the input file:(assgn3Docs.csv)");
+	                	String Directory = KB.next();
+	                	DoublyLinkedList<Vocab> bank = new DoublyLinkedList<>();
+	                    System.out.println("Loading from a file...");
+	                    getFiles(Directory,bank);
+	                    vocab_list=bank;
+	                    bank.printList();
+	                    System.out.println("Done Loading.");
+	                    break;
+	                case 8:
+	              System.out.println("Enter the Letter");
+	              String letter = KB.next();
+	              if(!(letter.length()==1)) {System.out.println("Not a letter. Retry");break;}
+	              else { ArrayList<String>store= new ArrayList<>();
+	              for(int i=0;i<vocab_list.getSize();i++) { 
+	            	 Vocab vocab=vocab_list.datafinder(i);
+		        	 SinglyLinkedList<String> words = vocab.getWords();
+	            	  for(int j=0;j<words.getSize();j++) {
+	            		  store.add(words.get(j));
+	            	  }
+	              }
+	              System.out.println("Built array. Now sorting....");
+	              Collections.sort(store);
+	           System.out.println("Searching....");
+	           int x=0;
+	           boolean happen=false;
+	           for(int i=0;i<store.size();i++) {
+	        	   if(store.get(i).substring(0,1).equals(letter)){
+	        		   x++;
+	        		   System.out.println(x+". "+store.get(i));
+	        		   happen=true;
+	        	   }
+	           }
+	           if(happen==false) System.out.println("No word that started with "+letter+" was found"); 
+	              }
+	                    break;
+	                case 9:
+	                    System.out.println("Please Enter the name of your file followed by <.txt>");
+	                    String directory=KB.next();
+	                    System.out.println("Writing to file...");
+	                    WriteFiles(directory, vocab_list);
+	                    System.out.println("Succesully created file "+directory);
+	                    break;
+	                case 0:
+	                    System.out.println("Exiting...");
+	                    break;
+	                default:
+	                    System.out.println("Invalid choice. Please try again.");
+	            }
+	        } while (choice != 0);
+	        KB.close();
+	    }
+}
