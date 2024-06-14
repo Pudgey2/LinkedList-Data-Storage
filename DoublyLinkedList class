@@ -1,0 +1,189 @@
+import java.util.*;
+public class DoublyLinkedList<Vocab> {
+	private class Node<Vocab> {
+		
+        private Vocab data;
+        private Node<Vocab> next;
+        private Node<Vocab> prev;
+
+        public Node(Vocab data, Node prev, Node next) {
+            this.data = data;
+            this.prev = prev;
+            this.next = next;
+        }
+
+		public Vocab getData() {
+			return data;
+		}
+
+		public void setData(Vocab data) {
+			this.data = data;
+		}
+	}
+	
+private Node<Vocab> head;
+private Node<Vocab> tail;
+private int counter;
+
+public DoublyLinkedList() {
+	head=null;
+	tail=null;
+	counter=0;
+}
+
+public int getSize() {
+	return counter;
+}
+
+public void display() {
+	if(head==null) {
+		System.out.println("List is empty");
+	}else {
+		System.out.println("Here are your "+ counter+ " values from the Doubly list: ");
+		Node current=head;
+		while(current!=null) {
+			System.out.println(current.data);
+			current=current.next;
+		}
+	}
+}
+
+public void AddAtHead(Vocab data) {
+	Node<Vocab> temp=head;
+	head = new Node<Vocab>(data,null,head);
+	if(tail==null) {
+		tail=head;
+		
+	}else {temp.prev=head;}
+	counter++;
+}
+
+public void RemoveHead() {
+	if(head==null) {return;}else {
+		head=head.next;counter--;
+	}
+}
+
+public void RemoveTail() {
+	if(tail==null) {return;} else if (tail.prev == null) {
+        head = null;
+        tail = null;
+    } else {
+		tail=tail.prev;
+	    tail.next=null;counter--;
+	}
+}
+
+public void AddAtTail(Vocab data) {
+	Node temp=tail;
+	tail= new Node<Vocab>(data,tail,null);
+	if(head==null) {
+		head=tail;
+	}else {temp.next=tail;}
+	counter ++;
+}
+
+public void ReplaceAt(Vocab data, Vocab newdata) {
+	if(head==null) {
+		return;
+	}else {Node current =head;
+	while(current!=null && current.data!=data) {
+		current=current.next;
+	}
+	if(current==null) {
+		return;
+	}else {current.data=newdata;}
+	}
+}
+
+public void AddAfterData(Vocab data, Vocab newdata) {
+	if(head==null) {
+		return;
+	}else {Node current=head;
+	while(current!=null ) {
+		if(current.data.equals(data)) {
+			if(current==null) {return;}else if(current.next==null) {AddAtTail(newdata);}else {
+			 Node<Vocab> newNode = new Node<Vocab>(newdata,current,current.next);
+			 current.next.prev=newNode;
+			 current.next=newNode;
+			 counter++;
+			}
+		}
+		current=current.next;
+	}
+	}
+}
+
+public void AddBeforeData(Vocab data, Vocab newdata) {
+    if (head == null) {
+        return; 
+    } else {
+        Node current = head;
+        Node prev=null;
+        while (current != null ) {
+        	if(current.data.equals(data)) {
+        		 Node<Vocab> newNode = new Node<Vocab>(newdata, current.prev, current);
+        		 if (prev != null) {
+                     prev.next = newNode;
+                 }else {AddAtHead(newdata);}
+                 return;
+        	}
+        	prev=current;
+            current = current.next;
+        }
+    }
+}
+
+public void removedata(Vocab data) {
+	if(head==null) {System.out.println("Im Wrong");return;}
+	else {Node current = head;
+	while(current!=null && current.next!=null) {
+		if(current.data.equals(data)) {
+			current.next=current.next.next;
+		}
+		current=current.next;
+	}
+	}
+}
+
+public void printList() {
+	 System.out.println("");
+	if(head==null) {
+		System.out.print("X");
+	}else {System.out.print("X<-->");
+	Node current = head;
+	while(current!=null) {
+		System.out.print(current.data);
+		System.out.print("<-->");
+		current=current.next;
+	}
+	if(current==null) {
+		System.out.print("X\n");
+	}
+	}
+}
+
+public Vocab datafinder(int index) {
+	Vocab vocab=null;
+	if(head==null) {System.out.println("Head empty");}
+	else {Node<Vocab> current=head;
+for(int i=0;i<index-2;i++) {
+	current=current.next;
+}
+vocab=current.getData();
+	}
+	return vocab;
+}
+
+public ArrayList<Vocab> datagather() {
+	ArrayList<Vocab> ret = new ArrayList<>();
+	if(head==null) {System.out.println("Head empty");}
+	else {Node<Vocab>current=head;
+	while(current!=null){
+		ret.add(current.getData());
+		current=current.next;
+	 }
+  }
+	return ret;
+}
+}
