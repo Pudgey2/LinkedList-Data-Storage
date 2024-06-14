@@ -4,7 +4,7 @@
 
 This project implements a vocabulary list management system using doubly linked lists and singly linked lists in Java. The main components of the structure are depicted in the diagram, showing the relationships and organization of the data.
 
-![LinkedList-Data-Storage](GraphRepresentation.png)
+!(GraphRepresentation.png)
 
 ### Main Components
 
