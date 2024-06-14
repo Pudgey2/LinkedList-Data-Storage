@@ -1,0 +1,25 @@
+public class Vocab {
+	    String topic;
+	    SinglyLinkedList<String> words;
+
+	    public Vocab(String topic) {
+	        this.topic = topic;
+	        this.words = new SinglyLinkedList<>();
+	    }
+
+		public String getTopic() {
+			return topic;
+		}
+
+		public void setTopic(String topic) {
+			this.topic = topic;
+		}
+
+		public SinglyLinkedList<String> getWords() {
+			return words;
+		}
+
+		public void setWords(SinglyLinkedList<String> words) {
+			this.words = words;
+		}
+	}
