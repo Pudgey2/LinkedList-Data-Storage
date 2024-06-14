@@ -1,0 +1,192 @@
+import java.util.*;
+
+public class SinglyLinkedList<T> {
+	
+	private int counter;
+	private Node<T> head;
+	
+	public SinglyLinkedList() {
+		head=null;
+		counter=0;
+	}
+	private class Node<T>{
+		T data;
+		Node<T> next;
+		
+		 Node(T data, Node<T> next) {
+	         this.data = data;
+	         this.next = next;
+	     }
+		 
+		 Node(T data) {
+	         this.data = data;
+	         this.next = null;
+	     }
+	}
+	
+	public int getSize() {
+		return counter;
+	}
+	
+	public void display() {
+		if(head==null) {
+			System.out.println("List is empty");
+		}else {
+			System.out.println("Here are your "+ counter+ " values from the Singly list: ");
+			Node<T>current=head;
+			int i=1;
+			while(current!=null) {
+				System.out.printf("%-6d: %-15s", i, current.data);
+				if(i%2==0) {	System.out.println("");}
+				current=current.next;
+				i++;
+			}
+		}
+	}
+	
+	public void addAtHead(T data) {
+	head= new Node<T>(data, head);
+counter++;
+	}
+
+	 public void addAtEnd(T data) {
+		 
+		 Node<T> newNode = new Node<T>(data);
+		
+		 
+		 if(head==null) {
+			 head=newNode;
+			 counter++;
+		 }
+		 else { Node<T> current = head;
+		 while(current!=null && current.next != null){
+			 current=current.next;
+		 }
+		 if (current != null) {
+	            current.next = newNode;
+	        }
+		 } 
+		 counter++;
+	 }
+	 
+	 public void addAfter(T ValueIndex, T data) {
+		 Node<T>newNode = new Node<T>(data);
+		 Node<T> current = head;
+		 while(current!=null && current.data!=ValueIndex) {
+			 current=current.next;
+		 }
+		 if(current==null) {return;}else {
+		 current.next=newNode;
+		 counter++;
+		 
+	 }
+	} 
+	 
+	 public void addBefore(T valueIndex, T newdata) {//wrong
+		 Node<T>newNode = new Node<T>(newdata);
+		
+		 if(head==null) {return;}
+		 else if(head.data==valueIndex){
+			 addAtHead(newdata);}
+		 else  {
+			 Node<T>current=head;
+		 
+	 while(current!=null &&current.data!=valueIndex) {
+		 current=current.next;
+	 }
+	 
+	 if(current.next!=null && current.next.data!=valueIndex) {
+		 current.next=new Node<T>(newdata, current.next);
+	 }
+		 }
+	 
+	}
+	 
+	 public void removeHead() {
+		 if(head!=null) {
+			head=head.next;
+			counter--;
+		 }else {return;}
+	}
+	
+	 public void removeTail() {
+		 if(head==null) {return;}
+		 else if(head.next==null) {
+			 removeHead();return;
+		 }else {
+			 Node<T> current = head;
+			 while(current.next.next!=null) {
+				 current=current.next;
+			 }
+			 current.next=null;
+			 counter--;
+		 	}
+		 }
+	 
+	 public void removedata(T data) {
+		 if (head==null) {return;}
+		 if(head.data==data) {
+			 removeHead();
+		 }else {Node<T>current=head;
+		 while(current.next!=null && current.next.data !=data) {
+			 current=current.next;
+		 }
+		 if(current.next.data==data) {
+			 current.next=current.next.next;
+			 counter--;
+		 }
+	 }
+}
+	 
+	 public void removeAfter(T data) {
+		 if(head==null) {return;}
+		 else {Node current=head;
+		 while(current!=null && current.data!=data) {
+			 current = current.next;
+		 }
+		 if(current!=null && current.next!=null) {
+			 current.next=current.next.next;
+		 }
+		 }
+	 }
+	 
+	 public void replaceAt(T data, T newdata) {
+		 if(head==null) {
+			 return;
+		 }else {Node<T>current =head;
+		 while(current!=null && current.data!=data) {
+			 current=current.next;
+		 }
+		 if(current==null) {
+			 return;
+		 }else {current.data=newdata;}
+	 }
+ }
+	 
+	 public void printList() {
+		 System.out.println("");
+		 if(head==null) {
+			System.out.print("X");
+		 }else {Node<T> current=head;
+		 while(current!=null) {
+			 System.out.print(current.data);
+			 System.out.print("-->");
+			 current=current.next;
+		 }
+			 if(current==null) {
+				 System.out.print("X\n");
+			 }
+		 }
+	 }
+	 
+	 public String get(int i) {
+		 if(head==null) {return "Empty List";}else {
+			 Node<T> current=head;
+		 for(int j=0;j<i-1;j++) {
+			 current=current.next;
+		 }
+		 return (String) current.data;
+	 }
+}
+	 
+}
